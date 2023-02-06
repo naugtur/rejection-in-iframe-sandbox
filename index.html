@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body>div {
+            width: 45%;
+            float: left;
+        }
+        iframe {
+            height: 700px;
+            width: 99%
+        }
+    </style>
+</head>
+<body>
+    <p>Open console and click buttons, compare results</p>
+    <div>
+        <button id="sandbox1">iframe sandbox="allow-scripts"</button>
+    </div>
+    <div>
+        <button id="sandbox2">iframe sandbox="allow-scripts allow-same-origin"</button>
+    </div>
+    <script>
+        const sandbox1 = document.querySelector('#sandbox1');
+        const sandbox2 = document.querySelector('#sandbox2');
+        sandbox1.addEventListener('click', (e) => {
+            const meFrame = document.createElement('iframe');
+            meFrame.setAttribute('sandbox', 'allow-scripts');
+            meFrame.setAttribute('src', 'inside.html');
+            e.target.parentNode.appendChild(meFrame);
+        });
+        sandbox2.addEventListener('click', (e) => {
+            const meFrame = document.createElement('iframe');
+            meFrame.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+            meFrame.setAttribute('src', 'inside.html');
+            e.target.parentNode.appendChild(meFrame);
+        });
+    </script>
+</body>
+</html>
+

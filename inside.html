@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="ses.umd.js"></script>
+</head>
+<body>
+<script style="display:block; white-space: pre; font-family: monospace">
+lockdown({
+    consoleTaming: 'unsafe',
+    errorTaming: 'unsafe',
+    mathTaming: 'unsafe',
+    dateTaming: 'unsafe',
+    overrideTaming: 'severe',
+    // tried some of these, but no difference
+    // unhandledRejectionTrapping: 'report',
+    // errorTrapping: 'none',
+        
+});
+addEventListener('unhandledrejection', (e) => {
+    e.preventDefault()
+    console.log('Captured rejection:', e)
+});
+addEventListener('error', (e) => {
+    e.preventDefault()
+    console.log('Captured error:', e)
+});
+
+function testcase(name){
+    Promise.resolve().then(()=>{
+        throw Error(name+"-rejection")
+    })
+}
+
+setTimeout(()=>{
+    testcase('top');
+},100)
+
+setTimeout(()=>{
+    const c = new Compartment({
+        Promise,
+    });
+    c.evaluate(`(${testcase})('ses');`);
+},100)
+</script>
+</body>
+</html>
