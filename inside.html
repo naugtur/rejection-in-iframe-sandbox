@@ -14,6 +14,7 @@ lockdown({
     errorTaming: 'unsafe',
     mathTaming: 'unsafe',
     dateTaming: 'unsafe',
+    // overrideTaming: 'min', // switching overrideTaming option doesn't help
     overrideTaming: 'severe',
     // tried some of these, but no difference
     // unhandledRejectionTrapping: 'report',
@@ -40,9 +41,7 @@ setTimeout(()=>{
 },100)
 
 setTimeout(()=>{
-    const c = new Compartment({
-        Promise,
-    });
+    const c = new Compartment();
     c.evaluate(`(${testcase})('ses');`);
 },100)
 </script>
