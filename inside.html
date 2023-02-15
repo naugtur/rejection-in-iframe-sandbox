@@ -1,64 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="script.js"></script>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Document</title>
+<script src="script.js"></script>
 </head>
 <body>
-<script style="display:block; white-space: pre; font-family: monospace">
-
-addEventListener('unhandledrejection', (e) => {
-    e.preventDefault()
-    console.log('Captured rejection:', e)
+<script style="display: block; white-space: pre; font-family: monospace">
+addEventListener("unhandledrejection", (e) => {
+  e.preventDefault();
+  console.log("Captured rejection:", e);
 });
-addEventListener('error', (e) => {
-    e.preventDefault()
-    console.log('Captured error:', e)
+addEventListener("error", (e) => {
+  e.preventDefault();
+  console.log("Captured error:", e);
 });
 
-function testcase(name){
-    Promise.resolve().then(()=>{
-        throw Error(name+"-rejection")
-    })
+function rejectionTest(name) {
+  Promise.resolve().then(() => {
+    throw Error(name);
+  });
 }
 
-setTimeout(()=>{
-    testcase('top');
-},100)
+rejectionTest("top-rejection");
 
-setTimeout(()=>{
-    eval(`(${testcase})('local-eval');`);
-},100)
+window.rejectionTestFromScript("script-rejection");
 
-setTimeout(()=>{
-    window.noEval('other-noEval');
-},100)
+window.runTest("script-wrap-rejection", rejectionTest);
 
-setTimeout(()=>{
-    window.runThat1(`(${testcase})('other-eval1');`);
-},100)
-
-setTimeout(()=>{
-    window.runThat2(`(${testcase})('other-eval2');`);
-},100)
-
-setTimeout(()=>{
-    window.runThat3(`(${testcase})('other-eval3');`,eval);
-},100)
-
-setTimeout(()=>{
-    window.runThat4(`(${testcase})('other-eval4');`,eval);
-},100)
-setTimeout(()=>{
-    window.runThat3(`(${testcase})('other-eval3W');`,(code)=>{eval(code)});
-},100)
-
-setTimeout(()=>{
-    window.runThat4(`(${testcase})('other-eval4W');`,(code)=>{eval(code)});
-},100)
+window.exceptionTestFromScript("script-exception");
 </script>
 </body>
 </html>

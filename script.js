@@ -1,17 +1,15 @@
-window.runThat1 = function (code) {
-    eval(code);
-};
-window.runThat2 = eval;
-window.runThat3 = function (code, borrowedEval) {
-    borrowedEval(code);
-};
-window.runThat4 = function (code, borrowedEval) {
-    var eval = borrowedEval;
-    eval(code);
+window.runTest = function (name, testcase) {
+  testcase(name);
 };
 
-window.noEval = (name) => {
-    Promise.resolve().then(()=>{
-        throw Error(name+"-rejection")
-    })
-}
+window.rejectionTestFromScript = (name) => {
+  Promise.resolve().then(() => {
+    throw Error(name);
+  });
+};
+
+window.exceptionTestFromScript = (name) => {
+  setTimeout(() => {
+    throw Error(name);
+  }, 200);
+};
