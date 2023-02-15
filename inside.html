@@ -5,22 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="ses.umd.js"></script>
+    <script src="script.js"></script>
 </head>
 <body>
 <script style="display:block; white-space: pre; font-family: monospace">
-lockdown({
-    consoleTaming: 'unsafe',
-    errorTaming: 'unsafe',
-    mathTaming: 'unsafe',
-    dateTaming: 'unsafe',
-    // overrideTaming: 'min', // switching overrideTaming option doesn't help
-    overrideTaming: 'severe',
-    // tried some of these, but no difference
-    // unhandledRejectionTrapping: 'report',
-    // errorTrapping: 'none',
-        
-});
+
 addEventListener('unhandledrejection', (e) => {
     e.preventDefault()
     console.log('Captured rejection:', e)
@@ -41,8 +30,11 @@ setTimeout(()=>{
 },100)
 
 setTimeout(()=>{
-    const c = new Compartment();
-    c.evaluate(`(${testcase})('ses');`);
+    eval(`(${testcase})('local-eval');`);
+},100)
+
+setTimeout(()=>{
+    window.runThat(`(${testcase})('other-eval');`);
 },100)
 </script>
 </body>
