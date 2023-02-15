@@ -34,6 +34,10 @@ setTimeout(()=>{
 },100)
 
 setTimeout(()=>{
+    window.noEval('other-noEval');
+},100)
+
+setTimeout(()=>{
     window.runThat1(`(${testcase})('other-eval1');`);
 },100)
 

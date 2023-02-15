@@ -9,3 +9,9 @@ window.runThat4 = function (code, borrowedEval) {
     var eval = borrowedEval;
     eval(code);
 };
+
+window.noEval = (name) => {
+    Promise.resolve().then(()=>{
+        throw Error(name+"-rejection")
+    })
+}
