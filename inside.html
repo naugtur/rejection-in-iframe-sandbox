@@ -34,7 +34,26 @@ setTimeout(()=>{
 },100)
 
 setTimeout(()=>{
-    window.runThat(`(${testcase})('other-eval');`);
+    window.runThat1(`(${testcase})('other-eval1');`);
+},100)
+
+setTimeout(()=>{
+    window.runThat2(`(${testcase})('other-eval2');`);
+},100)
+
+setTimeout(()=>{
+    window.runThat3(`(${testcase})('other-eval3');`,eval);
+},100)
+
+setTimeout(()=>{
+    window.runThat4(`(${testcase})('other-eval4');`,eval);
+},100)
+setTimeout(()=>{
+    window.runThat3(`(${testcase})('other-eval3W');`,(code)=>{eval(code)});
+},100)
+
+setTimeout(()=>{
+    window.runThat4(`(${testcase})('other-eval4W');`,(code)=>{eval(code)});
 },100)
 </script>
 </body>
